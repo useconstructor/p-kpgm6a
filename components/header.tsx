@@ -1,11 +1,22 @@
 'use client';
 import Link from 'next/link';
-import { useEffect,useRef,useState } from 'react';
-import { ArrowUpRight,Menu,Scissors,X } from 'lucide-react';
-export function Header(){
- const [open,setOpen]=useState(false);const toggle=useRef<HTMLButtonElement>(null);const panel=useRef<HTMLElement>(null);
- useEffect(()=>{if(!open)return; const close=(e:KeyboardEvent)=>{if(e.key==='Escape'){setOpen(false);toggle.current?.focus();}};document.addEventListener('keydown',close);return()=>document.removeEventListener('keydown',close)},[open]);
- useEffect(()=>{if(open)panel.current?.querySelector<HTMLAnchorElement>('a')?.focus()},[open]);
- const links=[{href:'/#servicios',label:'Servicios'},{href:'/#como-reservar',label:'Cómo reservar'},{href:'/reservar',label:'Reservar ahora'}];
- return <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur-md"><div className="page-width flex h-24 items-center justify-between gap-4 max-sm:h-20"><Link href="/" onClick={()=>setOpen(false)} aria-label="Barbería · negocio de ejemplo, inicio" className="flex min-h-11 items-center gap-3"><span className="flex size-11 items-center justify-center rounded-lg border border-primary bg-primary text-primary-foreground"><Scissors size={23} strokeWidth={1.6}/></span><span className="heading text-[20px] font-bold tracking-[-.04em] max-sm:text-[18px]">Barbería ·<span className="block font-sans text-sm font-normal tracking-normal text-muted-foreground">negocio de ejemplo</span></span></Link><nav aria-label="Navegación principal" className="flex items-center gap-10 text-base max-md:hidden"><Link href="/#servicios" className="py-3 hover:text-primary">Servicios</Link><Link href="/#como-reservar" className="py-3 hover:text-primary">Cómo reservar</Link><Link href="/reservar" className="flex min-h-12 items-center gap-6 rounded-lg bg-primary px-5 text-primary-foreground transition-colors hover:bg-foreground active:scale-[.98]">Reservar ahora<ArrowUpRight size={18}/></Link></nav><button ref={toggle} type="button" onClick={()=>setOpen(!open)} aria-expanded={open} aria-controls="mobile-navigation" aria-label={open?'Cerrar menú':'Abrir menú'} className="flex size-12 items-center justify-center rounded-lg border md:hidden">{open?<X/>:<Menu/>}</button></div><nav ref={panel} id="mobile-navigation" aria-label="Navegación móvil" inert={!open} className={`absolute left-0 right-0 top-full border-b bg-background p-6 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] md:hidden ${open?'translate-y-0 opacity-100':'pointer-events-none -translate-y-4 opacity-0'}`}>{links.map((l,i)=><Link key={l.href} href={l.href} onClick={()=>setOpen(false)} style={{transitionDelay:open?`${i*60}ms`:'0ms'}} className={`flex min-h-14 items-center justify-between border-b text-lg transition-all ${open?'translate-y-0 opacity-100':'-translate-y-2 opacity-0'}`}>{l.label}<ArrowUpRight size={18}/></Link>)}</nav></header>
+import { useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
+export function Header({ immersive = false }: { immersive?: boolean }) {
+  const [open, setOpen] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const panel = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    panel.current?.querySelector<HTMLAnchorElement>('a')?.focus();
+    const close = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(false); toggle.current?.focus(); } };
+    document.addEventListener('keydown', close);
+    return () => document.removeEventListener('keydown', close);
+  }, [open]);
+  const links = [{ href: '/#oficio', label: 'El oficio' }, { href: '/#servicios', label: 'Servicios' }, { href: '/reservar', label: 'Reservar ahora' }];
+  return <header className={`masthead ${immersive ? 'masthead-immersive' : ''}`}><div className="masthead-inner">
+    <Link href="/" onClick={() => setOpen(false)} className="wordmark" aria-label="Taller de Corte, marca ficticia, inicio"><span className="brand-symbol" aria-hidden="true">t/c</span><span>Taller de Corte<span className="brand-caption">Barbería · marca ficticia</span></span></Link>
+    <nav aria-label="Navegación principal" className="desktop-nav"><Link href="/#oficio">El oficio</Link><Link href="/#servicios">Servicios</Link><Link href="/reservar" className="nav-reserve">Reservar ahora<ArrowUpRight size={18} /></Link></nav>
+    <button ref={toggle} type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? 'Cerrar menú' : 'Abrir menú'} className="menu-toggle">{open ? <X /> : <Menu />}</button>
+  </div><nav ref={panel} id="mobile-navigation" aria-label="Navegación móvil" inert={!open} className={`mobile-nav ${open ? 'is-open' : ''}`}>{links.map(l => <Link key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}<ArrowUpRight size={20} /></Link>)}</nav></header>;
 }

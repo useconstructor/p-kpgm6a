@@ -1,13 +1,13 @@
 {
-  "primaryColor": "#F5F7F3",
-  "secondaryColor": "#CBD4CD",
-  "backgroundColor": "#F5F7F3",
-  "textColor": "#202923",
-  "accentColor": "#245743",
-  "fontHeading": "Manrope",
+  "primaryColor": "#642B34",
+  "secondaryColor": "#AAA9A3",
+  "backgroundColor": "#EEEDE7",
+  "textColor": "#232321",
+  "accentColor": "#642B34",
+  "fontHeading": "Anton",
   "fontBody": "Source Sans 3",
-  "borderRadius": "0.5rem",
-  "logoText": "Reservas Barbería",
-  "logoImageUrl": "https://vabacntbfcwhgkjqajcw.supabase.co/storage/v1/object/public/screenshots/projects/P-KPGM6A/logo.png",
-  "tone": "elegant"
+  "borderRadius": "0",
+  "logoText": "Taller de Corte",
+  "tone": "architectural",
+  "fictional": true
 }

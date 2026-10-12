@@ -19,3 +19,5 @@ next-env.d.ts
 .env*
 node_modules
 .next
+
+/.evidence/

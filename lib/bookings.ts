@@ -3,7 +3,7 @@ import { Temporal } from '@js-temporal/polyfill';
 import type { Transaction, Row } from '@libsql/client';
 import { createHash, randomUUID } from 'node:crypto';
 import { getDb, initializeDb } from './db';
-import { instantAt, validDate, utc, ZONE } from './time';
+import { instantAt, validDate, utc, ZONE, BOOKING_WINDOW_DAYS } from './time';
 import type { Service, Confirmation } from './types';
 type Reader=Pick<Transaction,'execute'>;
 export class BookingError extends Error {
@@ -19,7 +19,7 @@ async function service(db:Reader,id:string) {
  return {id:String(rows[0].id),name:String(rows[0].name),duration:Number(rows[0].duration)};
 }
 async function allowedSlots(db:Reader,id:string,date:string) {
- if(!validDate(date)) throw new BookingError(400,'Revisa la fecha.',{date:'Elige una fecha dentro de los próximos 14 días en Europe/Madrid.'});
+ if(!validDate(date)) throw new BookingError(400,'Revisa la fecha.',{date:`Elige una fecha dentro de los próximos ${BOOKING_WINDOW_DAYS} días en Europe/Madrid.`});
  const s=await service(db,id);
  const weekday=Temporal.PlainDate.from(date).dayOfWeek;
  const {rows:rules}=await db.execute({sql:'SELECT * FROM availability_rules WHERE weekday=? AND resource=?',args:[weekday,'silla-1']});
