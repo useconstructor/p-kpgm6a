@@ -1,0 +1,13 @@
+{
+  "primaryColor": "#F5F7F3",
+  "secondaryColor": "#CBD4CD",
+  "backgroundColor": "#F5F7F3",
+  "textColor": "#202923",
+  "accentColor": "#245743",
+  "fontHeading": "Manrope",
+  "fontBody": "Source Sans 3",
+  "borderRadius": "0.5rem",
+  "logoText": "Reservas Barbería",
+  "logoImageUrl": null,
+  "tone": "elegant"
+}
